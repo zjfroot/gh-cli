@@ -1,0 +1,35 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "gitcredentials",
+    srcs = [
+        "fake_helper_config.go",
+        "helper_config.go",
+        "updater.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/auth/shared/gitcredentials",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//git",
+        "//internal/ghinstance",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_makenowjust_heredoc//:heredoc",
+    ],
+)
+
+go_test(
+    name = "gitcredentials_test",
+    srcs = [
+        "fake_helper_config_test.go",
+        "helper_config_test.go",
+        "updater_test.go",
+    ],
+    deps = [
+        ":gitcredentials",
+        "//git",
+        "//pkg/cmd/auth/shared",
+        "//pkg/cmd/auth/shared/contract",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_stretchr_testify//require",
+    ],
+)

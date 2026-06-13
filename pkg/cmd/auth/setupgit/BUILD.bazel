@@ -1,0 +1,30 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "setupgit",
+    srcs = ["setupgit.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/auth/setupgit",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/gh",
+        "//pkg/cmd/auth/shared/gitcredentials",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "setupgit_test",
+    srcs = ["setupgit_test.go"],
+    embed = [":setupgit"],
+    deps = [
+        "//internal/config",
+        "//internal/gh",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//require",
+    ],
+)

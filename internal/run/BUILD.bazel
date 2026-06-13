@@ -1,0 +1,12 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "run",
+    srcs = [
+        "run.go",
+        "stub.go",
+    ],
+    importpath = "github.com/cli/cli/v2/internal/run",
+    visibility = ["//:__subpackages__"],
+    deps = ["//utils"],
+)

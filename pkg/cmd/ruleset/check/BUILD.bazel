@@ -1,0 +1,39 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "check",
+    srcs = ["check.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/ruleset/check",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//git",
+        "//internal/browser",
+        "//internal/gh",
+        "//internal/ghrepo",
+        "//internal/text",
+        "//pkg/cmd/ruleset/shared",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "check_test",
+    srcs = ["check_test.go"],
+    embed = [":check"],
+    deps = [
+        "//internal/browser",
+        "//internal/ghrepo",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+    data = glob(["fixtures/**"]),
+)

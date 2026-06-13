@@ -1,0 +1,37 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "delete",
+    srcs = [
+        "delete.go",
+        "http.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/gpg-key/delete",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/gh",
+        "//internal/ghinstance",
+        "//internal/prompter",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "delete_test",
+    srcs = ["delete_test.go"],
+    embed = [":delete"],
+    deps = [
+        "//internal/config",
+        "//internal/gh",
+        "//internal/prompter",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_cli_go_gh_v2//pkg/api",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

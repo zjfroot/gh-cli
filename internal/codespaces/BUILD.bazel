@@ -1,0 +1,27 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "codespaces",
+    srcs = [
+        "codespaces.go",
+        "ssh.go",
+        "states.go",
+    ],
+    importpath = "github.com/cli/cli/v2/internal/codespaces",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/codespaces/api",
+        "//internal/codespaces/connection",
+        "//internal/codespaces/portforwarder",
+        "//internal/codespaces/rpc",
+        "//internal/text",
+        "@com_github_cenkalti_backoff_v4//:backoff",
+        "@com_github_cli_safeexec//:safeexec",
+    ],
+)
+
+go_test(
+    name = "codespaces_test",
+    srcs = ["ssh_test.go"],
+    embed = [":codespaces"],
+)

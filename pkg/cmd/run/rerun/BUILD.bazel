@@ -1,0 +1,34 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "rerun",
+    srcs = ["rerun.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/run/rerun",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/ghrepo",
+        "//pkg/cmd/run/shared",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "rerun_test",
+    srcs = ["rerun_test.go"],
+    embed = [":rerun"],
+    deps = [
+        "//internal/ghrepo",
+        "//internal/prompter",
+        "//pkg/cmd/run/shared",
+        "//pkg/cmd/workflow/shared",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

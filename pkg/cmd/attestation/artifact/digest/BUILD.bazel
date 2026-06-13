@@ -1,0 +1,18 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "digest",
+    srcs = ["digest.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/attestation/artifact/digest",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "digest_test",
+    srcs = ["digest_test.go"],
+    embed = [":digest"],
+    deps = [
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

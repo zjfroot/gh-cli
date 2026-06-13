@@ -1,0 +1,19 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "format",
+    srcs = ["display.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/project/shared/format",
+    visibility = ["//visibility:public"],
+    deps = ["//pkg/cmd/project/shared/queries"],
+)
+
+go_test(
+    name = "format_test",
+    srcs = ["display_test.go"],
+    embed = [":format"],
+    deps = [
+        "//pkg/cmd/project/shared/queries",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

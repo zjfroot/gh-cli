@@ -1,0 +1,49 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "create",
+    srcs = [
+        "create.go",
+        "http.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/release/create",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//git",
+        "//internal/gh",
+        "//internal/ghinstance",
+        "//internal/ghrepo",
+        "//internal/text",
+        "//pkg/cmd/release/shared",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "//pkg/surveyext",
+        "@com_github_cli_go_gh_v2//pkg/auth",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_shurcool_githubv4//:githubv4",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "create_test",
+    srcs = ["create_test.go"],
+    embed = [":create"],
+    deps = [
+        "//git",
+        "//internal/config",
+        "//internal/gh",
+        "//internal/ghrepo",
+        "//internal/prompter",
+        "//internal/run",
+        "//pkg/cmd/release/shared",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

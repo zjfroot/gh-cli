@@ -1,0 +1,15 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "gpg-key",
+    srcs = ["gpg_key.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/gpg-key",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/gpg-key/add",
+        "//pkg/cmd/gpg-key/delete",
+        "//pkg/cmd/gpg-key/list",
+        "//pkg/cmdutil",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

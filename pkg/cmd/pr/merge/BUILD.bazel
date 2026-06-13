@@ -1,0 +1,48 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "merge",
+    srcs = [
+        "http.go",
+        "merge.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/pr/merge",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//context",
+        "//git",
+        "//internal/gh",
+        "//internal/ghrepo",
+        "//pkg/cmd/pr/shared",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "//pkg/surveyext",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_shurcool_githubv4//:githubv4",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "merge_test",
+    srcs = ["merge_test.go"],
+    embed = [":merge"],
+    deps = [
+        "//api",
+        "//context",
+        "//git",
+        "//internal/ghrepo",
+        "//internal/prompter",
+        "//internal/run",
+        "//pkg/cmd/pr/shared",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "//test",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

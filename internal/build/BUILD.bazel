@@ -1,0 +1,8 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "build",
+    srcs = ["build.go"],
+    importpath = "github.com/cli/cli/v2/internal/build",
+    visibility = ["//:__subpackages__"],
+)

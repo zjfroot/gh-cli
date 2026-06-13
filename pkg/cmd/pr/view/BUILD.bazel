@@ -1,0 +1,42 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "view",
+    srcs = ["view.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/pr/view",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/browser",
+        "//internal/ghrepo",
+        "//internal/text",
+        "//pkg/cmd/pr/shared",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "//pkg/markdown",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "view_test",
+    srcs = ["view_test.go"],
+    embed = [":view"],
+    deps = [
+        "//api",
+        "//internal/browser",
+        "//internal/ghrepo",
+        "//internal/run",
+        "//pkg/cmd/pr/shared",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "//pkg/jsonfieldstest",
+        "//test",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+    data = glob(["fixtures/**"]),
+)

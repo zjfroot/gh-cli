@@ -1,0 +1,33 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "add",
+    srcs = [
+        "add.go",
+        "http.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/ssh-key/add",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/gh",
+        "//internal/ghinstance",
+        "//pkg/cmd/ssh-key/shared",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "add_test",
+    srcs = ["add_test.go"],
+    embed = [":add"],
+    deps = [
+        "//internal/config",
+        "//internal/gh",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

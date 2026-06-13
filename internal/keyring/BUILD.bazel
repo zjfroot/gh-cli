@@ -1,0 +1,9 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "keyring",
+    srcs = ["keyring.go"],
+    importpath = "github.com/cli/cli/v2/internal/keyring",
+    visibility = ["//:__subpackages__"],
+    deps = ["@com_github_zalando_go_keyring//:go-keyring"],
+)

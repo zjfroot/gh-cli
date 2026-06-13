@@ -1,0 +1,13 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "ssh",
+    srcs = ["ssh_keys.go"],
+    importpath = "github.com/cli/cli/v2/pkg/ssh",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/config",
+        "//internal/run",
+        "@com_github_cli_safeexec//:safeexec",
+    ],
+)

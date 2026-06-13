@@ -1,0 +1,19 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "shared",
+    srcs = [
+        "shared.go",
+        "test.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/workflow/shared",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/ghrepo",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_cli_go_gh_v2//pkg/asciisanitizer",
+        "@org_golang_x_text//transform",
+    ],
+)

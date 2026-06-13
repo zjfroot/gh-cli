@@ -1,0 +1,15 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "deploy-key",
+    srcs = ["deploy-key.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/repo/deploy-key",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/repo/deploy-key/add",
+        "//pkg/cmd/repo/deploy-key/delete",
+        "//pkg/cmd/repo/deploy-key/list",
+        "//pkg/cmdutil",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

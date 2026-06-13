@@ -1,0 +1,12 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "contract",
+    srcs = ["helper_config.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/auth/shared/contract",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/auth/shared",
+        "@com_github_stretchr_testify//require",
+    ],
+)

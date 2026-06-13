@@ -1,0 +1,32 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "view",
+    srcs = ["view.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/project/view",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/project/shared/client",
+        "//pkg/cmd/project/shared/queries",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "//pkg/markdown",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "view_test",
+    srcs = ["view_test.go"],
+    embed = [":view"],
+    deps = [
+        "//internal/prompter",
+        "//pkg/cmd/project/shared/queries",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//assert",
+        "@in_gopkg_h2non_gock_v1//:gock_v1",
+    ],
+)

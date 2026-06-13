@@ -1,0 +1,31 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "repo",
+    srcs = ["repo.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/repo",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/repo/archive",
+        "//pkg/cmd/repo/autolink",
+        "//pkg/cmd/repo/clone",
+        "//pkg/cmd/repo/create",
+        "//pkg/cmd/repo/credits",
+        "//pkg/cmd/repo/delete",
+        "//pkg/cmd/repo/deploy-key",
+        "//pkg/cmd/repo/edit",
+        "//pkg/cmd/repo/fork",
+        "//pkg/cmd/repo/garden",
+        "//pkg/cmd/repo/gitignore",
+        "//pkg/cmd/repo/license",
+        "//pkg/cmd/repo/list",
+        "//pkg/cmd/repo/rename",
+        "//pkg/cmd/repo/setdefault",
+        "//pkg/cmd/repo/sync",
+        "//pkg/cmd/repo/unarchive",
+        "//pkg/cmd/repo/view",
+        "//pkg/cmdutil",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

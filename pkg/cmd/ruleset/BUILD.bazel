@@ -1,0 +1,16 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "ruleset",
+    srcs = ["ruleset.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/ruleset",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/ruleset/check",
+        "//pkg/cmd/ruleset/list",
+        "//pkg/cmd/ruleset/view",
+        "//pkg/cmdutil",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

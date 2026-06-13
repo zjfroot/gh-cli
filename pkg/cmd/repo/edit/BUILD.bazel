@@ -1,0 +1,37 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "edit",
+    srcs = ["edit.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/repo/edit",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/featuredetection",
+        "//internal/ghinstance",
+        "//internal/ghrepo",
+        "//internal/text",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "//pkg/set",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+        "@org_golang_x_sync//errgroup",
+    ],
+)
+
+go_test(
+    name = "edit_test",
+    srcs = ["edit_test.go"],
+    embed = [":edit"],
+    deps = [
+        "//internal/ghrepo",
+        "//internal/prompter",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

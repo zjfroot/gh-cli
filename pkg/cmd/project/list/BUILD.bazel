@@ -1,0 +1,33 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "list",
+    srcs = ["list.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/project/list",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/tableprinter",
+        "//pkg/cmd/project/shared/client",
+        "//pkg/cmd/project/shared/format",
+        "//pkg/cmd/project/shared/queries",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "list_test",
+    srcs = ["list_test.go"],
+    embed = [":list"],
+    deps = [
+        "//pkg/cmd/project/shared/queries",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_stretchr_testify//assert",
+        "@in_gopkg_h2non_gock_v1//:gock_v1",
+    ],
+)

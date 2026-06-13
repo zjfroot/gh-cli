@@ -1,0 +1,52 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "inspect",
+    srcs = [
+        "bundle.go",
+        "inspect.go",
+        "options.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/attestation/inspect",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/ghinstance",
+        "//internal/ghrepo",
+        "//internal/text",
+        "//pkg/cmd/attestation/api",
+        "//pkg/cmd/attestation/artifact/oci",
+        "//pkg/cmd/attestation/auth",
+        "//pkg/cmd/attestation/io",
+        "//pkg/cmd/attestation/verification",
+        "//pkg/cmdutil",
+        "@com_github_cli_go_gh_v2//pkg/auth",
+        "@com_github_digitorus_timestamp//:timestamp",
+        "@com_github_in_toto_attestation//go/v1:go",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_sigstore_sigstore_go//pkg/bundle",
+        "@com_github_sigstore_sigstore_go//pkg/fulcio/certificate",
+        "@com_github_sigstore_sigstore_go//pkg/verify",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "inspect_test",
+    srcs = [
+        "bundle_test.go",
+        "inspect_test.go",
+    ],
+    embed = [":inspect"],
+    deps = [
+        "//pkg/cmd/attestation/artifact/oci",
+        "//pkg/cmd/attestation/io",
+        "//pkg/cmd/attestation/test",
+        "//pkg/cmd/attestation/verification",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+    data = ["//pkg/cmd/attestation/test/data:sigstore-js-2.1.0-bundle.json"],
+)

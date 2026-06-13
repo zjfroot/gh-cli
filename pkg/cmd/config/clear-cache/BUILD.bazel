@@ -1,0 +1,25 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "clear-cache",
+    srcs = ["clear_cache.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/config/clear-cache",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_cli_go_gh_v2//pkg/config",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "clear-cache_test",
+    srcs = ["clear_cache_test.go"],
+    embed = [":clear-cache"],
+    deps = [
+        "//pkg/iostreams",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

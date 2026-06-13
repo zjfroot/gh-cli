@@ -1,0 +1,22 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "garden",
+    srcs = [
+        "garden.go",
+        "http.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/repo/garden",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/gh",
+        "//internal/ghinstance",
+        "//internal/ghrepo",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "//utils",
+        "@com_github_spf13_cobra//:cobra",
+        "@org_golang_x_term//:term",
+    ],
+)

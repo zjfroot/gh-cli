@@ -1,0 +1,21 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "data",
+    srcs = ["data.go"],
+    embedsrcs = ["sigstore-js-2.1.0-bundle.json"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/attestation/test/data",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_sigstore_sigstore_go//pkg/bundle",
+        "@com_github_sigstore_sigstore_go//pkg/testing/data",
+    ],
+)
+
+exports_files([
+    "sigstore-js-2.1.0.tgz",
+    "sigstore-js-2.1.0-bundle.json",
+    "sigstore-js-2.1.0_with_2_bundles.jsonl",
+    "github_provenance_demo-0.0.12-py3-none-any-bundle-missing-verification-material.jsonl",
+    "github_provenance_demo-0.0.12-py3-none-any-bundle-missing-cert.jsonl",
+])

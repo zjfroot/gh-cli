@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "shared",
+    srcs = ["repo.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/repo/shared",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "shared_test",
+    srcs = ["repo_test.go"],
+    embed = [":shared"],
+)

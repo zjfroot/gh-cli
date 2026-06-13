@@ -1,0 +1,37 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "shared",
+    srcs = [
+        "artifacts.go",
+        "presentation.go",
+        "shared.go",
+        "test.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/run/shared",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/ghinstance",
+        "//internal/ghrepo",
+        "//pkg/cmd/workflow/shared",
+        "//pkg/iostreams",
+    ],
+)
+
+go_test(
+    name = "shared_test",
+    srcs = [
+        "artifacts_test.go",
+        "shared_test.go",
+    ],
+    embed = [":shared"],
+    deps = [
+        "//api",
+        "//internal/ghrepo",
+        "//pkg/httpmock",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

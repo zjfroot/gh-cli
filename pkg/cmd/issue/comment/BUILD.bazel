@@ -1,0 +1,34 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "comment",
+    srcs = ["comment.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/issue/comment",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/ghrepo",
+        "//pkg/cmd/issue/shared",
+        "//pkg/cmd/pr/shared",
+        "//pkg/cmdutil",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "comment_test",
+    srcs = ["comment_test.go"],
+    embed = [":comment"],
+    deps = [
+        "//api",
+        "//internal/browser",
+        "//internal/ghrepo",
+        "//pkg/cmd/pr/shared",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

@@ -1,0 +1,43 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "browse",
+    srcs = [
+        "browse.go",
+        "rg.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/extension/browse",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//git",
+        "//internal/gh",
+        "//internal/ghrepo",
+        "//pkg/cmd/repo/view",
+        "//pkg/extensions",
+        "//pkg/iostreams",
+        "//pkg/search",
+        "@com_github_charmbracelet_glamour//:glamour",
+        "@com_github_gdamore_tcell_v2//:tcell",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_rivo_tview//:tview",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "browse_test",
+    srcs = ["browse_test.go"],
+    embed = [":browse"],
+    deps = [
+        "//internal/config",
+        "//internal/gh",
+        "//internal/ghrepo",
+        "//pkg/cmd/repo/view",
+        "//pkg/extensions",
+        "//pkg/httpmock",
+        "//pkg/search",
+        "@com_github_rivo_tview//:tview",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

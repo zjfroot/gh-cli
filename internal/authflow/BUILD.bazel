@@ -1,0 +1,28 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "authflow",
+    srcs = [
+        "flow.go",
+        "success.go",
+    ],
+    importpath = "github.com/cli/cli/v2/internal/authflow",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//api",
+        "//internal/browser",
+        "//internal/ghinstance",
+        "//pkg/iostreams",
+        "//utils",
+        "@com_github_cli_go_gh_v2//pkg/auth",
+        "@com_github_cli_oauth//:oauth",
+        "@com_github_henvic_httpretty//:httpretty",
+    ],
+)
+
+go_test(
+    name = "authflow_test",
+    srcs = ["flow_test.go"],
+    embed = [":authflow"],
+    deps = ["@com_github_stretchr_testify//assert"],
+)

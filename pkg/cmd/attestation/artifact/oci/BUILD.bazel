@@ -1,0 +1,34 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "oci",
+    srcs = [
+        "client.go",
+        "mock_client.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/attestation/artifact/oci",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/attestation/api",
+        "//pkg/cmd/attestation/test/data",
+        "@com_github_google_go_containerregistry//pkg/authn",
+        "@com_github_google_go_containerregistry//pkg/name",
+        "@com_github_google_go_containerregistry//pkg/v1:pkg",
+        "@com_github_google_go_containerregistry//pkg/v1/remote",
+        "@com_github_google_go_containerregistry//pkg/v1/remote/transport",
+        "@com_github_sigstore_sigstore_go//pkg/bundle",
+    ],
+)
+
+go_test(
+    name = "oci_test",
+    srcs = ["client_test.go"],
+    embed = [":oci"],
+    deps = [
+        "@com_github_google_go_containerregistry//pkg/name",
+        "@com_github_google_go_containerregistry//pkg/v1:pkg",
+        "@com_github_google_go_containerregistry//pkg/v1/remote",
+        "@com_github_google_go_containerregistry//pkg/v1/remote/transport",
+        "@com_github_stretchr_testify//require",
+    ],
+)

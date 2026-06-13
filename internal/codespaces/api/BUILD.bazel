@@ -1,0 +1,27 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "api",
+    srcs = ["api.go"],
+    importpath = "github.com/cli/cli/v2/internal/codespaces/api",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//api",
+        "//internal/ghinstance",
+        "//pkg/cmdutil",
+        "@com_github_cenkalti_backoff_v4//:backoff",
+        "@com_github_opentracing_opentracing_go//:opentracing-go",
+    ],
+)
+
+go_test(
+    name = "api_test",
+    srcs = ["api_test.go"],
+    embed = [":api"],
+    deps = [
+        "//internal/config",
+        "//internal/gh",
+        "//internal/gh/mock",
+        "//pkg/cmdutil",
+    ],
+)
