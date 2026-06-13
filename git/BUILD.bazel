@@ -1,4 +1,4 @@
-load("@rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "git",
@@ -19,7 +19,7 @@ go_library(
 )
 
 go_test(
-    name = "git_test_bin",
+    name = "git_test",
     srcs = [
         "client_test.go",
         "url_test.go",
@@ -30,14 +30,4 @@ go_test(
         "@com_github_stretchr_testify//require",
     ],
     data = glob(["fixtures/**"]),
-)
-
-sh_test(
-    name = "git_test",
-    srcs = ["git_test_wrapper.sh"],
-    data = [
-        ":git_test_bin",
-        ":git_test_bin_",
-        glob(["fixtures/**"]),
-    ],
 )
