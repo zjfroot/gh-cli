@@ -38,3 +38,4 @@ vendor/
 /bazel-out
 /bazel-testlogs
 /bazel-workspace
+MODULE.bazel.lock
