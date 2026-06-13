@@ -1,0 +1,15 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "script_lib",
+    srcs = ["build.go"],
+    importpath = "github.com/cli/cli/v2/script",
+    visibility = ["//visibility:private"],
+    deps = ["@com_github_cli_safeexec//:safeexec"],
+)
+
+go_binary(
+    name = "script",
+    embed = [":script_lib"],
+    visibility = ["//visibility:public"],
+)

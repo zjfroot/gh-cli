@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "autolink",
+    srcs = ["autolink.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/repo/autolink",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/repo/autolink/list",
+        "//pkg/cmdutil",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

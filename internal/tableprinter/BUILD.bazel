@@ -1,0 +1,23 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "tableprinter",
+    srcs = ["table_printer.go"],
+    importpath = "github.com/cli/cli/v2/internal/tableprinter",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/text",
+        "//pkg/iostreams",
+        "@com_github_cli_go_gh_v2//pkg/tableprinter",
+    ],
+)
+
+go_test(
+    name = "tableprinter_test",
+    srcs = ["table_printer_test.go"],
+    deps = [
+        ":tableprinter",
+        "//pkg/iostreams",
+        "@com_github_stretchr_testify//require",
+    ],
+)

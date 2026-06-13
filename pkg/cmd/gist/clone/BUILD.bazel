@@ -1,0 +1,36 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "clone",
+    srcs = ["clone.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/gist/clone",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//git",
+        "//internal/gh",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_cli_go_gh_v2//pkg/auth",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+        "@com_github_spf13_pflag//:pflag",
+    ],
+)
+
+go_test(
+    name = "clone_test",
+    srcs = ["clone_test.go"],
+    embed = [":clone"],
+    deps = [
+        "//git",
+        "//internal/config",
+        "//internal/gh",
+        "//internal/run",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "//test",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

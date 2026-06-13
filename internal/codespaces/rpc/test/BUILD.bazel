@@ -1,0 +1,12 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "test",
+    srcs = ["port_forwarder.go"],
+    importpath = "github.com/cli/cli/v2/internal/codespaces/rpc/test",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/codespaces/portforwarder",
+        "@com_github_microsoft_dev_tunnels//go/tunnels",
+    ],
+)

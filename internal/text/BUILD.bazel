@@ -1,0 +1,20 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "text",
+    srcs = ["text.go"],
+    importpath = "github.com/cli/cli/v2/internal/text",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "@com_github_cli_go_gh_v2//pkg/text",
+        "@org_golang_x_text//cases",
+        "@org_golang_x_text//language",
+    ],
+)
+
+go_test(
+    name = "text_test",
+    srcs = ["text_test.go"],
+    embed = [":text"],
+    deps = ["@com_github_stretchr_testify//assert"],
+)

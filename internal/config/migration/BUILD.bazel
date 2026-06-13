@@ -1,0 +1,25 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "migration",
+    srcs = ["multi_account.go"],
+    importpath = "github.com/cli/cli/v2/internal/config/migration",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/keyring",
+        "@com_github_cli_go_gh_v2//pkg/api",
+        "@com_github_cli_go_gh_v2//pkg/config",
+    ],
+)
+
+go_test(
+    name = "migration_test",
+    srcs = ["multi_account_test.go"],
+    deps = [
+        ":migration",
+        "//internal/keyring",
+        "//pkg/httpmock",
+        "@com_github_cli_go_gh_v2//pkg/config",
+        "@com_github_stretchr_testify//require",
+    ],
+)

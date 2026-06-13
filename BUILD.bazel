@@ -1,0 +1,4 @@
+load("@gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix github.com/cli/cli/v2
+gazelle(name = "gazelle")

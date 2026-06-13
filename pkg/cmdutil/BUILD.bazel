@@ -1,0 +1,55 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "cmdutil",
+    srcs = [
+        "args.go",
+        "auth_check.go",
+        "cmdgroup.go",
+        "errors.go",
+        "factory.go",
+        "file_input.go",
+        "flags.go",
+        "json_flags.go",
+        "legacy.go",
+        "repo_override.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmdutil",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//context",
+        "//git",
+        "//internal/browser",
+        "//internal/gh",
+        "//internal/ghrepo",
+        "//internal/prompter",
+        "//pkg/extensions",
+        "//pkg/iostreams",
+        "//pkg/jsoncolor",
+        "//pkg/set",
+        "@com_github_alecaivazis_survey_v2//terminal",
+        "@com_github_cli_go_gh_v2//pkg/jq",
+        "@com_github_cli_go_gh_v2//pkg/template",
+        "@com_github_spf13_cobra//:cobra",
+        "@com_github_spf13_pflag//:pflag",
+    ],
+)
+
+go_test(
+    name = "cmdutil_test",
+    srcs = [
+        "args_test.go",
+        "auth_check_test.go",
+        "factory_test.go",
+        "json_flags_test.go",
+    ],
+    embed = [":cmdutil"],
+    deps = [
+        "//internal/config",
+        "//internal/gh",
+        "//pkg/iostreams",
+        "@com_github_spf13_cobra//:cobra",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

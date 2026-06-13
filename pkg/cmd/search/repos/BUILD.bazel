@@ -1,0 +1,33 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "repos",
+    srcs = ["repos.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/search/repos",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/browser",
+        "//internal/tableprinter",
+        "//internal/text",
+        "//pkg/cmd/search/shared",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "//pkg/search",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "repos_test",
+    srcs = ["repos_test.go"],
+    embed = [":repos"],
+    deps = [
+        "//internal/browser",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "//pkg/search",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

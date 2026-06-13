@@ -1,0 +1,40 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "list",
+    srcs = ["list.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/ruleset/list",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/browser",
+        "//internal/ghinstance",
+        "//internal/ghrepo",
+        "//internal/tableprinter",
+        "//internal/text",
+        "//pkg/cmd/ruleset/shared",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_cli_go_gh_v2//pkg/auth",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "list_test",
+    srcs = ["list_test.go"],
+    embed = [":list"],
+    deps = [
+        "//internal/browser",
+        "//internal/ghrepo",
+        "//pkg/cmd/ruleset/shared",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+    data = glob(["fixtures/**"]),
+)

@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "license",
+    srcs = ["license.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/repo/license",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/repo/license/list",
+        "//pkg/cmd/repo/license/view",
+        "//pkg/cmdutil",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

@@ -1,0 +1,15 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "ssh-key",
+    srcs = ["ssh_key.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/ssh-key",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/ssh-key/add",
+        "//pkg/cmd/ssh-key/delete",
+        "//pkg/cmd/ssh-key/list",
+        "//pkg/cmdutil",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

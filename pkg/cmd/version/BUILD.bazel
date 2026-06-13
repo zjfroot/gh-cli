@@ -1,0 +1,18 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "version",
+    srcs = ["version.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/version",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmdutil",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "version_test",
+    srcs = ["version_test.go"],
+    embed = [":version"],
+)

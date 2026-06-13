@@ -1,0 +1,36 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "refresh",
+    srcs = ["refresh.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/auth/refresh",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//git",
+        "//internal/authflow",
+        "//internal/gh",
+        "//pkg/cmd/auth/shared",
+        "//pkg/cmd/auth/shared/gitcredentials",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "//pkg/set",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "refresh_test",
+    srcs = ["refresh_test.go"],
+    embed = [":refresh"],
+    deps = [
+        "//internal/config",
+        "//internal/gh",
+        "//internal/prompter",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//require",
+    ],
+)

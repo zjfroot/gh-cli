@@ -1,0 +1,12 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "client",
+    srcs = ["client.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/project/shared/client",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/project/shared/queries",
+        "//pkg/cmdutil",
+    ],
+)

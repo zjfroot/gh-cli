@@ -1,0 +1,27 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "featuredetection",
+    srcs = [
+        "detector_mock.go",
+        "feature_detection.go",
+    ],
+    importpath = "github.com/cli/cli/v2/internal/featuredetection",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//api",
+        "@com_github_cli_go_gh_v2//pkg/auth",
+        "@org_golang_x_sync//errgroup",
+    ],
+)
+
+go_test(
+    name = "featuredetection_test",
+    srcs = ["feature_detection_test.go"],
+    embed = [":featuredetection"],
+    deps = [
+        "//pkg/httpmock",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

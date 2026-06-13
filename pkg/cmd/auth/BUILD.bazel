@@ -1,0 +1,20 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "auth",
+    srcs = ["auth.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/auth",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/auth/gitcredential",
+        "//pkg/cmd/auth/login",
+        "//pkg/cmd/auth/logout",
+        "//pkg/cmd/auth/refresh",
+        "//pkg/cmd/auth/setupgit",
+        "//pkg/cmd/auth/status",
+        "//pkg/cmd/auth/switch",
+        "//pkg/cmd/auth/token",
+        "//pkg/cmdutil",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

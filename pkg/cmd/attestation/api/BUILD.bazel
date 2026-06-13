@@ -1,0 +1,36 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "api",
+    srcs = [
+        "attestation.go",
+        "client.go",
+        "mock_client.go",
+        "trust_domain.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/attestation/api",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//pkg/cmd/attestation/io",
+        "//pkg/cmd/attestation/test/data",
+        "@com_github_cenkalti_backoff_v4//:backoff",
+        "@com_github_sigstore_sigstore_go//pkg/bundle",
+    ],
+)
+
+go_test(
+    name = "api_test",
+    srcs = [
+        "client_test.go",
+        "mock_apiClient_test.go",
+    ],
+    embed = [":api"],
+    deps = [
+        "//api",
+        "//pkg/cmd/attestation/io",
+        "@com_github_cli_go_gh_v2//pkg/api",
+        "@com_github_stretchr_testify//mock",
+        "@com_github_stretchr_testify//require",
+    ],
+)

@@ -1,0 +1,40 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "sync",
+    srcs = [
+        "git.go",
+        "http.go",
+        "mocks.go",
+        "sync.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/repo/sync",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//context",
+        "//git",
+        "//internal/ghrepo",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+        "@com_github_stretchr_testify//mock",
+    ],
+)
+
+go_test(
+    name = "sync_test",
+    srcs = ["sync_test.go"],
+    embed = [":sync"],
+    deps = [
+        "//context",
+        "//git",
+        "//internal/ghrepo",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

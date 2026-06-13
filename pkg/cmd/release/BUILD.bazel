@@ -1,0 +1,20 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "release",
+    srcs = ["release.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/release",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/release/create",
+        "//pkg/cmd/release/delete",
+        "//pkg/cmd/release/delete-asset",
+        "//pkg/cmd/release/download",
+        "//pkg/cmd/release/edit",
+        "//pkg/cmd/release/list",
+        "//pkg/cmd/release/upload",
+        "//pkg/cmd/release/view",
+        "//pkg/cmdutil",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

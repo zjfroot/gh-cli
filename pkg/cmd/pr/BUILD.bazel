@@ -1,0 +1,29 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "pr",
+    srcs = ["pr.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/pr",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/issue/lock",
+        "//pkg/cmd/pr/checkout",
+        "//pkg/cmd/pr/checks",
+        "//pkg/cmd/pr/close",
+        "//pkg/cmd/pr/comment",
+        "//pkg/cmd/pr/create",
+        "//pkg/cmd/pr/diff",
+        "//pkg/cmd/pr/edit",
+        "//pkg/cmd/pr/list",
+        "//pkg/cmd/pr/merge",
+        "//pkg/cmd/pr/ready",
+        "//pkg/cmd/pr/reopen",
+        "//pkg/cmd/pr/review",
+        "//pkg/cmd/pr/status",
+        "//pkg/cmd/pr/update-branch",
+        "//pkg/cmd/pr/view",
+        "//pkg/cmdutil",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

@@ -1,0 +1,37 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "unarchive",
+    srcs = [
+        "http.go",
+        "unarchive.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/repo/unarchive",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/gh",
+        "//internal/ghrepo",
+        "//internal/prompter",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_shurcool_githubv4//:githubv4",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "unarchive_test",
+    srcs = ["unarchive_test.go"],
+    embed = [":unarchive"],
+    deps = [
+        "//internal/ghrepo",
+        "//internal/prompter",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

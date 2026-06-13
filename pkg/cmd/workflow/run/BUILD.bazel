@@ -1,0 +1,35 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "run",
+    srcs = ["run.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/workflow/run",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/ghrepo",
+        "//pkg/cmd/workflow/shared",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+        "@in_gopkg_yaml_v3//:yaml_v3",
+    ],
+)
+
+go_test(
+    name = "run_test",
+    srcs = ["run_test.go"],
+    embed = [":run"],
+    deps = [
+        "//api",
+        "//internal/ghrepo",
+        "//internal/prompter",
+        "//pkg/cmd/workflow/shared",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

@@ -1,0 +1,19 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "ghrepo",
+    srcs = ["repo.go"],
+    importpath = "github.com/cli/cli/v2/internal/ghrepo",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/ghinstance",
+        "@com_github_cli_go_gh_v2//pkg/auth",
+        "@com_github_cli_go_gh_v2//pkg/repository",
+    ],
+)
+
+go_test(
+    name = "ghrepo_test",
+    srcs = ["repo_test.go"],
+    embed = [":ghrepo"],
+)

@@ -1,0 +1,32 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "download",
+    srcs = ["download.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/release/download",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/ghrepo",
+        "//pkg/cmd/release/shared",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "download_test",
+    srcs = ["download_test.go"],
+    embed = [":download"],
+    deps = [
+        "//internal/ghrepo",
+        "//pkg/cmd/release/shared",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

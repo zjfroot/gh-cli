@@ -1,0 +1,19 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "auth",
+    srcs = ["host.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/attestation/auth",
+    visibility = ["//visibility:public"],
+    deps = ["@com_github_cli_go_gh_v2//pkg/auth"],
+)
+
+go_test(
+    name = "auth_test",
+    srcs = ["host_test.go"],
+    embed = [":auth"],
+    deps = [
+        "@com_github_cli_go_gh_v2//pkg/auth",
+        "@com_github_stretchr_testify//require",
+    ],
+)

@@ -1,0 +1,15 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "jsoncolor",
+    srcs = ["jsoncolor.go"],
+    importpath = "github.com/cli/cli/v2/pkg/jsoncolor",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "jsoncolor_test",
+    srcs = ["jsoncolor_test.go"],
+    embed = [":jsoncolor"],
+    deps = ["@com_github_google_go_cmp//cmp"],
+)

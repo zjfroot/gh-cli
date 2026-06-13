@@ -1,0 +1,47 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "factory",
+    srcs = [
+        "default.go",
+        "remote_resolver.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/factory",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//context",
+        "//git",
+        "//internal/browser",
+        "//internal/config",
+        "//internal/gh",
+        "//internal/ghinstance",
+        "//internal/ghrepo",
+        "//internal/prompter",
+        "//pkg/cmd/extension",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "//pkg/set",
+        "@com_github_cli_go_gh_v2//pkg/ssh",
+    ],
+)
+
+go_test(
+    name = "factory_test",
+    srcs = [
+        "default_test.go",
+        "remote_resolver_test.go",
+    ],
+    embed = [":factory"],
+    deps = [
+        "//git",
+        "//internal/config",
+        "//internal/gh",
+        "//internal/gh/mock",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

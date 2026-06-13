@@ -1,0 +1,49 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "shared",
+    srcs = [
+        "git_credential.go",
+        "login_flow.go",
+        "oauth_scopes.go",
+        "prompt.go",
+        "writeable.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/auth/shared",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//git",
+        "//internal/authflow",
+        "//internal/browser",
+        "//internal/gh",
+        "//internal/ghinstance",
+        "//pkg/cmd/auth/shared/gitcredentials",
+        "//pkg/cmd/ssh-key/add",
+        "//pkg/iostreams",
+        "//pkg/ssh",
+        "@com_github_makenowjust_heredoc//:heredoc",
+    ],
+)
+
+go_test(
+    name = "shared_test",
+    srcs = [
+        "git_credential_test.go",
+        "login_flow_test.go",
+        "oauth_scopes_test.go",
+    ],
+    embed = [":shared"],
+    deps = [
+        "//git",
+        "//internal/prompter",
+        "//internal/run",
+        "//pkg/cmd/auth/shared/gitcredentials",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "//pkg/ssh",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

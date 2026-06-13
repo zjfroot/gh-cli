@@ -1,0 +1,30 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "rpc",
+    srcs = ["invoker.go"],
+    importpath = "github.com/cli/cli/v2/internal/codespaces/rpc",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/codespaces/portforwarder",
+        "//internal/codespaces/rpc/codespace",
+        "//internal/codespaces/rpc/jupyter",
+        "//internal/codespaces/rpc/ssh",
+        "@org_golang_google_grpc//:grpc",
+        "@org_golang_google_grpc//credentials/insecure",
+        "@org_golang_google_grpc//metadata",
+    ],
+)
+
+go_test(
+    name = "rpc_test",
+    srcs = ["invoker_test.go"],
+    embed = [":rpc"],
+    deps = [
+        "//internal/codespaces/rpc/codespace",
+        "//internal/codespaces/rpc/jupyter",
+        "//internal/codespaces/rpc/ssh",
+        "//internal/codespaces/rpc/test",
+        "@org_golang_google_grpc//:grpc",
+    ],
+)

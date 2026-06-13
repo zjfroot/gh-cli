@@ -1,0 +1,16 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "mock",
+    srcs = [
+        "config.go",
+        "migration.go",
+    ],
+    importpath = "github.com/cli/cli/v2/internal/gh/mock",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/gh",
+        "//pkg/option",
+        "@com_github_cli_go_gh_v2//pkg/config",
+    ],
+)

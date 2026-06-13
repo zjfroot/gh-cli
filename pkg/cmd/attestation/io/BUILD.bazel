@@ -1,0 +1,13 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "io",
+    srcs = ["handler.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/attestation/io",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/tableprinter",
+        "//pkg/iostreams",
+        "//utils",
+    ],
+)

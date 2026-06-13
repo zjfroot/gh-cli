@@ -1,0 +1,59 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+exports_files(["embed/tuf-repo.github.com/root.json"])
+
+go_library(
+    name = "verification",
+    srcs = [
+        "attestation.go",
+        "extensions.go",
+        "mock_verifier.go",
+        "policy.go",
+        "sigstore.go",
+        "tuf.go",
+    ],
+    embedsrcs = ["embed/tuf-repo.github.com/root.json"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/attestation/verification",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/attestation/api",
+        "//pkg/cmd/attestation/artifact",
+        "//pkg/cmd/attestation/artifact/oci",
+        "//pkg/cmd/attestation/io",
+        "//pkg/cmd/attestation/test/data",
+        "@com_github_cli_go_gh_v2//pkg/config",
+        "@com_github_in_toto_attestation//go/v1:go",
+        "@com_github_sigstore_protobuf_specs//gen/pb-go/bundle/v1:bundle",
+        "@com_github_sigstore_sigstore_go//pkg/bundle",
+        "@com_github_sigstore_sigstore_go//pkg/fulcio/certificate",
+        "@com_github_sigstore_sigstore_go//pkg/root",
+        "@com_github_sigstore_sigstore_go//pkg/tuf",
+        "@com_github_sigstore_sigstore_go//pkg/verify",
+    ],
+)
+
+go_test(
+    name = "verification_test",
+    srcs = [
+        "attestation_test.go",
+        "extensions_test.go",
+        "tuf_test.go",
+    ],
+    embed = [":verification"],
+    deps = [
+        "//pkg/cmd/attestation/api",
+        "@com_github_cli_go_gh_v2//pkg/config",
+        "@com_github_sigstore_protobuf_specs//gen/pb-go/bundle/v1:bundle",
+        "@com_github_sigstore_protobuf_specs//gen/pb-go/dsse",
+        "@com_github_sigstore_sigstore_go//pkg/bundle",
+        "@com_github_sigstore_sigstore_go//pkg/fulcio/certificate",
+        "@com_github_sigstore_sigstore_go//pkg/verify",
+        "@com_github_stretchr_testify//require",
+    ],
+    data = [
+        "//pkg/cmd/attestation/test/data:sigstore-js-2.1.0_with_2_bundles.jsonl",
+        "//pkg/cmd/attestation/test/data:sigstore-js-2.1.0-bundle.json",
+        "//pkg/cmd/attestation/test/data:github_provenance_demo-0.0.12-py3-none-any-bundle-missing-verification-material.jsonl",
+        "//pkg/cmd/attestation/test/data:github_provenance_demo-0.0.12-py3-none-any-bundle-missing-cert.jsonl",
+    ],
+)

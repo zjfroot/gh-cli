@@ -1,0 +1,28 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "shared",
+    srcs = ["shared.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/gist/shared",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/prompter",
+        "//internal/text",
+        "//pkg/iostreams",
+        "@com_github_gabriel_vasile_mimetype//:mimetype",
+        "@com_github_shurcool_githubv4//:githubv4",
+    ],
+)
+
+go_test(
+    name = "shared_test",
+    srcs = ["shared_test.go"],
+    embed = [":shared"],
+    deps = [
+        "//internal/prompter",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

@@ -1,0 +1,39 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "trustedroot",
+    srcs = ["trustedroot.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/attestation/trustedroot",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/attestation/api",
+        "//pkg/cmd/attestation/auth",
+        "//pkg/cmd/attestation/io",
+        "//pkg/cmd/attestation/verification",
+        "//pkg/cmdutil",
+        "@com_github_cli_go_gh_v2//pkg/auth",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_sigstore_sigstore_go//pkg/tuf",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "trustedroot_test",
+    srcs = ["trustedroot_test.go"],
+    embed = [":trustedroot"],
+    deps = [
+        "//internal/config",
+        "//internal/gh",
+        "//internal/gh/mock",
+        "//pkg/cmd/attestation/api",
+        "//pkg/cmd/attestation/test",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_sigstore_sigstore_go//pkg/tuf",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+    data = ["//pkg/cmd/attestation/verification:embed/tuf-repo.github.com/root.json"],
+)

@@ -1,0 +1,19 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "shared",
+    srcs = ["shared.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/variable/shared",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//pkg/cmdutil",
+    ],
+)
+
+go_test(
+    name = "shared_test",
+    srcs = ["shared_test.go"],
+    embed = [":shared"],
+    deps = ["@com_github_stretchr_testify//assert"],
+)

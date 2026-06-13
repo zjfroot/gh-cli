@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "jsonfieldstest",
+    srcs = ["jsonfieldstest.go"],
+    importpath = "github.com/cli/cli/v2/pkg/jsonfieldstest",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmdutil",
+        "@com_github_spf13_cobra//:cobra",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

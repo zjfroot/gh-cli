@@ -1,0 +1,12 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "shared",
+    srcs = ["user_keys.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/ssh-key/shared",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/ghinstance",
+    ],
+)

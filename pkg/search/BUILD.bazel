@@ -1,0 +1,33 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "search",
+    srcs = [
+        "query.go",
+        "result.go",
+        "searcher.go",
+        "searcher_mock.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/search",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/ghinstance",
+        "//pkg/cmdutil",
+    ],
+)
+
+go_test(
+    name = "search_test",
+    srcs = [
+        "query_test.go",
+        "result_test.go",
+        "searcher_test.go",
+    ],
+    embed = [":search"],
+    deps = [
+        "//pkg/httpmock",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

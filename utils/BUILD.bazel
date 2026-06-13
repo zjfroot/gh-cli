@@ -1,0 +1,9 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "utils",
+    srcs = ["utils.go"],
+    importpath = "github.com/cli/cli/v2/utils",
+    visibility = ["//visibility:public"],
+    deps = ["@org_golang_x_term//:term"],
+)

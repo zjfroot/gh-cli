@@ -1,0 +1,29 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "surveyext",
+    srcs = [
+        "editor.go",
+        "editor_manual.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/surveyext",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_alecaivazis_survey_v2//:survey",
+        "@com_github_alecaivazis_survey_v2//terminal",
+        "@com_github_cli_safeexec//:safeexec",
+        "@com_github_kballard_go_shellquote//:go-shellquote",
+    ],
+)
+
+go_test(
+    name = "surveyext_test",
+    srcs = ["editor_test.go"],
+    embed = [":surveyext"],
+    deps = [
+        "@com_github_alecaivazis_survey_v2//:survey",
+        "@com_github_alecaivazis_survey_v2//terminal",
+        "@com_github_creack_pty//:pty",
+        "@com_github_stretchr_testify//assert",
+    ],
+)
