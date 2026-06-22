@@ -1,0 +1,17 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "config",
+    srcs = ["config.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/config",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/config",
+        "//pkg/cmd/config/clear-cache",
+        "//pkg/cmd/config/get",
+        "//pkg/cmd/config/list",
+        "//pkg/cmd/config/set",
+        "//pkg/cmdutil",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

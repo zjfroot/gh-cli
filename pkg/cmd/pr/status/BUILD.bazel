@@ -1,0 +1,53 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "status",
+    srcs = [
+        "http.go",
+        "status.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/pr/status",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//context",
+        "//git",
+        "//internal/featuredetection",
+        "//internal/gh",
+        "//internal/ghrepo",
+        "//internal/text",
+        "//pkg/cmd/pr/shared",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "//pkg/set",
+        "@com_github_cli_go_gh_v2//pkg/auth",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "status_test",
+    srcs = [
+        "http_test.go",
+        "status_test.go",
+    ],
+    embed = [":status"],
+    deps = [
+        "//api",
+        "//context",
+        "//git",
+        "//internal/config",
+        "//internal/featuredetection",
+        "//internal/gh",
+        "//internal/ghrepo",
+        "//internal/run",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "//test",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_stretchr_testify//assert",
+    ],
+    data = glob(["fixtures/**"]),
+)

@@ -1,0 +1,23 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "portforwarder",
+    srcs = ["port_forwarder.go"],
+    importpath = "github.com/cli/cli/v2/internal/codespaces/portforwarder",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/codespaces/connection",
+        "@com_github_microsoft_dev_tunnels//go/tunnels",
+    ],
+)
+
+go_test(
+    name = "portforwarder_test",
+    srcs = ["port_forwarder_test.go"],
+    embed = [":portforwarder"],
+    deps = [
+        "//internal/codespaces/api",
+        "//internal/codespaces/connection",
+        "@com_github_microsoft_dev_tunnels//go/tunnels",
+    ],
+)

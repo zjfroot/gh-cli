@@ -1,0 +1,12 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "browser",
+    srcs = [
+        "browser.go",
+        "stub.go",
+    ],
+    importpath = "github.com/cli/cli/v2/internal/browser",
+    visibility = ["//:__subpackages__"],
+    deps = ["@com_github_cli_go_gh_v2//pkg/browser"],
+)

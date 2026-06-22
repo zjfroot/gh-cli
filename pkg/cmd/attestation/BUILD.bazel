@@ -1,0 +1,17 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "attestation",
+    srcs = ["attestation.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/attestation",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/attestation/download",
+        "//pkg/cmd/attestation/inspect",
+        "//pkg/cmd/attestation/trustedroot",
+        "//pkg/cmd/attestation/verify",
+        "//pkg/cmdutil",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

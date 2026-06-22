@@ -1,0 +1,25 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "completion",
+    srcs = ["completion.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/completion",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "completion_test",
+    srcs = ["completion_test.go"],
+    embed = [":completion"],
+    deps = [
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

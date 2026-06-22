@@ -7,6 +7,7 @@ At a high level, these areas make up the `github.com/cli/cli` project:
 - [`script/`](../script) - build and release scripts
 - [`internal/`](../internal) - Go packages highly specific to our needs and thus internal
 - [`go.mod`](../go.mod) - external Go dependencies for this project, automatically fetched by Go at build time
+- [`MODULE.bazel`](../MODULE.bazel) - Bazel build configuration ([Bazel build docs](bazel.md))
 
 Some auxiliary Go packages are at the top level of the project for historical reasons:
 - [`api/`](../api) - main utilities for making requests to the GitHub API

@@ -1,0 +1,29 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "connection",
+    srcs = [
+        "connection.go",
+        "tunnels_api_server_mock.go",
+    ],
+    importpath = "github.com/cli/cli/v2/internal/codespaces/connection",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/codespaces/api",
+        "@com_github_gorilla_websocket//:websocket",
+        "@com_github_microsoft_dev_tunnels//go/tunnels",
+        "@com_github_microsoft_dev_tunnels//go/tunnels/ssh",
+        "@com_github_microsoft_dev_tunnels//go/tunnels/ssh/messages",
+        "@org_golang_x_crypto//ssh",
+    ],
+)
+
+go_test(
+    name = "connection_test",
+    srcs = ["connection_test.go"],
+    embed = [":connection"],
+    deps = [
+        "//internal/codespaces/api",
+        "@com_github_microsoft_dev_tunnels//go/tunnels",
+    ],
+)

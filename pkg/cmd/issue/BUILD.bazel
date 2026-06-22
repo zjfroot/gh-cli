@@ -1,0 +1,27 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "issue",
+    srcs = ["issue.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/issue",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/issue/close",
+        "//pkg/cmd/issue/comment",
+        "//pkg/cmd/issue/create",
+        "//pkg/cmd/issue/delete",
+        "//pkg/cmd/issue/develop",
+        "//pkg/cmd/issue/edit",
+        "//pkg/cmd/issue/list",
+        "//pkg/cmd/issue/lock",
+        "//pkg/cmd/issue/pin",
+        "//pkg/cmd/issue/reopen",
+        "//pkg/cmd/issue/status",
+        "//pkg/cmd/issue/transfer",
+        "//pkg/cmd/issue/unpin",
+        "//pkg/cmd/issue/view",
+        "//pkg/cmdutil",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

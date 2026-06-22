@@ -1,0 +1,16 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "ghinstance",
+    srcs = ["host.go"],
+    importpath = "github.com/cli/cli/v2/internal/ghinstance",
+    visibility = ["//:__subpackages__"],
+    deps = ["@com_github_cli_go_gh_v2//pkg/auth"],
+)
+
+go_test(
+    name = "ghinstance_test",
+    srcs = ["host_test.go"],
+    embed = [":ghinstance"],
+    deps = ["@com_github_stretchr_testify//assert"],
+)

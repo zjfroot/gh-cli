@@ -1,0 +1,41 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "checkout",
+    srcs = ["checkout.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/pr/checkout",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//context",
+        "//git",
+        "//internal/gh",
+        "//internal/ghrepo",
+        "//pkg/cmd/pr/shared",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "checkout_test",
+    srcs = ["checkout_test.go"],
+    embed = [":checkout"],
+    deps = [
+        "//api",
+        "//context",
+        "//git",
+        "//internal/config",
+        "//internal/gh",
+        "//internal/ghrepo",
+        "//internal/run",
+        "//pkg/cmd/pr/shared",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "//test",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

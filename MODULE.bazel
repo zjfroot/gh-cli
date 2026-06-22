@@ -1,0 +1,76 @@
+module(
+    name = "gh",
+    version = "2.0.0",
+)
+
+bazel_dep(name = "rules_go", version = "0.60.0")
+bazel_dep(name = "gazelle", version = "0.45.0")
+bazel_dep(name = "bazel_skylib", version = "1.8.2")
+bazel_dep(name = "rules_cc", version = "0.2.17")
+bazel_dep(name = "rules_proto", version = "7.1.0")
+bazel_dep(name = "protobuf", version = "33.4")
+bazel_dep(name = "aspect_bazel_lib", version = "2.20.4")
+
+go_sdk = use_extension("@rules_go//go:extensions.bzl", "go_sdk")
+go_sdk.download(version = "1.24.4")
+
+go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
+go_deps.from_file(go_mod = "//:go.mod")
+go_deps.gazelle_override(
+    path = "github.com/google/certificate-transparency-go",
+    build_file_generation = "auto",
+    directives = [
+        "gazelle:proto disable",
+    ],
+)
+use_repo(
+    go_deps,
+    "com_github_alecaivazis_survey_v2",
+    "com_github_briandowns_spinner",
+    "com_github_cenkalti_backoff_v4",
+    "com_github_charmbracelet_glamour",
+    "com_github_charmbracelet_lipgloss",
+    "com_github_cli_go_gh_v2",
+    "com_github_cli_go_internal",
+    "com_github_cli_oauth",
+    "com_github_cli_safeexec",
+    "com_github_cpuguy83_go_md2man_v2",
+    "com_github_creack_pty",
+    "com_github_digitorus_timestamp",
+    "com_github_distribution_reference",
+    "com_github_gabriel_vasile_mimetype",
+    "com_github_gdamore_tcell_v2",
+    "com_github_google_go_cmp",
+    "com_github_google_go_containerregistry",
+    "com_github_google_shlex",
+    "com_github_gorilla_websocket",
+    "com_github_hashicorp_go_multierror",
+    "com_github_hashicorp_go_version",
+    "com_github_henvic_httpretty",
+    "com_github_in_toto_attestation",
+    "com_github_joho_godotenv",
+    "com_github_kballard_go_shellquote",
+    "com_github_makenowjust_heredoc",
+    "com_github_mattn_go_colorable",
+    "com_github_mattn_go_isatty",
+    "com_github_mgutz_ansi",
+    "com_github_microsoft_dev_tunnels",
+    "com_github_muhammadmuzzammil1998_jsonc",
+    "com_github_opentracing_opentracing_go",
+    "com_github_rivo_tview",
+    "com_github_shurcool_githubv4",
+    "com_github_sigstore_protobuf_specs",
+    "com_github_sigstore_sigstore_go",
+    "com_github_spf13_cobra",
+    "com_github_spf13_pflag",
+    "com_github_stretchr_testify",
+    "com_github_zalando_go_keyring",
+    "in_gopkg_h2non_gock_v1",
+    "in_gopkg_yaml_v3",
+    "org_golang_google_grpc",
+    "org_golang_google_protobuf",
+    "org_golang_x_crypto",
+    "org_golang_x_sync",
+    "org_golang_x_term",
+    "org_golang_x_text",
+)

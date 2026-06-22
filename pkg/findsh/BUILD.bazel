@@ -1,0 +1,17 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "findsh",
+    srcs = [
+        "find.go",
+        "find_windows.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/findsh",
+    visibility = ["//visibility:public"],
+    deps = select({
+        "@rules_go//go/platform:windows": [
+            "@com_github_cli_safeexec//:safeexec",
+        ],
+        "//conditions:default": [],
+    }),
+)

@@ -1,0 +1,29 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "prs",
+    srcs = ["prs.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/search/prs",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/search/shared",
+        "//pkg/cmdutil",
+        "//pkg/search",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "prs_test",
+    srcs = ["prs_test.go"],
+    embed = [":prs"],
+    deps = [
+        "//pkg/cmd/search/shared",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "//pkg/search",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

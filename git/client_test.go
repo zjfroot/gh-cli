@@ -706,8 +706,10 @@ func createCommitsCommandContext(t *testing.T, testData stubbedCommitsCommandDat
 }
 
 func TestClientLastCommit(t *testing.T) {
+	dir := t.TempDir()
+	cpFixture(t, dir)
 	client := Client{
-		RepoDir: "./fixtures/simple.git",
+		RepoDir: dir,
 	}
 	c, err := client.LastCommit(context.Background())
 	assert.NoError(t, err)
@@ -716,12 +718,49 @@ func TestClientLastCommit(t *testing.T) {
 }
 
 func TestClientCommitBody(t *testing.T) {
+	dir := t.TempDir()
+	cpFixture(t, dir)
 	client := Client{
-		RepoDir: "./fixtures/simple.git",
+		RepoDir: dir,
 	}
 	body, err := client.CommitBody(context.Background(), "6f1a2405cace1633d89a79c74c65f22fe78f9659")
 	assert.NoError(t, err)
 	assert.Equal(t, "I'm starting to get the hang of things\n", body)
+}
+
+func cpFixture(t *testing.T, dst string) {
+	t.Helper()
+	src, err := filepath.Abs("./fixtures/simple.git")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := os.Stat(src); os.IsNotExist(err) {
+		exe, _ := os.Executable()
+		src = filepath.Join(filepath.Dir(exe), "..", "git", "fixtures", "simple.git")
+	}
+	err = copyDir(src, dst)
+	require.NoError(t, err)
+}
+
+func copyDir(src, dst string) error {
+	return filepath.Walk(src, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		rel, err := filepath.Rel(src, path)
+		if err != nil {
+			return err
+		}
+		target := filepath.Join(dst, rel)
+		if info.IsDir() {
+			return os.MkdirAll(target, info.Mode())
+		}
+		data, err := os.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(target, data, info.Mode())
+	})
 }
 
 func TestClientReadBranchConfig(t *testing.T) {

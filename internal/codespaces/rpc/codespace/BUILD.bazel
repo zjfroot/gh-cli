@@ -1,0 +1,28 @@
+load("@rules_go//go:def.bzl", "go_library")
+load("@rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+proto_library(
+    name = "codespace_proto",
+    srcs = ["codespace_host_service.v1.proto"],
+    visibility = ["//:__subpackages__"],
+)
+
+go_proto_library(
+    name = "codespace_go_proto",
+    compilers = [
+        "@rules_go//proto:go_proto",
+        "@rules_go//proto:go_grpc_v2",
+    ],
+    importpath = "github.com/cli/cli/v2/internal/codespaces/rpc/codespace",
+    proto = ":codespace_proto",
+    visibility = ["//:__subpackages__"],
+)
+
+go_library(
+    name = "codespace",
+    srcs = ["codespace_host_service.v1.proto.mock.go"],
+    importpath = "github.com/cli/cli/v2/internal/codespaces/rpc/codespace",
+    visibility = ["//:__subpackages__"],
+    embed = [":codespace_go_proto"],
+)

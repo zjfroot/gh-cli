@@ -1,0 +1,8 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "test",
+    srcs = ["path.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/attestation/test",
+    visibility = ["//visibility:public"],
+)

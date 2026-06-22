@@ -1,0 +1,29 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "queries",
+    srcs = ["queries.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/project/shared/queries",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/prompter",
+        "//pkg/iostreams",
+        "//pkg/set",
+        "@com_github_briandowns_spinner//:spinner",
+        "@com_github_shurcool_githubv4//:githubv4",
+    ],
+)
+
+go_test(
+    name = "queries_test",
+    srcs = [
+        "export_data_test.go",
+        "queries_test.go",
+    ],
+    embed = [":queries"],
+    deps = [
+        "@com_github_stretchr_testify//assert",
+        "@in_gopkg_h2non_gock_v1//:gock_v1",
+    ],
+)

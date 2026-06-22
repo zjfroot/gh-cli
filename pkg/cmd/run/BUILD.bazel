@@ -1,0 +1,19 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "run",
+    srcs = ["run.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/run",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/run/cancel",
+        "//pkg/cmd/run/delete",
+        "//pkg/cmd/run/download",
+        "//pkg/cmd/run/list",
+        "//pkg/cmd/run/rerun",
+        "//pkg/cmd/run/view",
+        "//pkg/cmd/run/watch",
+        "//pkg/cmdutil",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

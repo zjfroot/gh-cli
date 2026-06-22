@@ -1,0 +1,36 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "ghcmd",
+    srcs = ["cmd.go"],
+    importpath = "github.com/cli/cli/v2/internal/ghcmd",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//api",
+        "//internal/build",
+        "//internal/config",
+        "//internal/config/migration",
+        "//internal/update",
+        "//pkg/cmd/factory",
+        "//pkg/cmd/root",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "//utils",
+        "@com_github_alecaivazis_survey_v2//core",
+        "@com_github_alecaivazis_survey_v2//terminal",
+        "@com_github_cli_safeexec//:safeexec",
+        "@com_github_mattn_go_isatty//:go-isatty",
+        "@com_github_mgutz_ansi//:ansi",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "ghcmd_test",
+    srcs = ["cmd_test.go"],
+    embed = [":ghcmd"],
+    deps = [
+        "//pkg/cmdutil",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

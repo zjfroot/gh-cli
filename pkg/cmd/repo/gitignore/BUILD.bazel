@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "gitignore",
+    srcs = ["gitignore.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/repo/gitignore",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/repo/gitignore/list",
+        "//pkg/cmd/repo/gitignore/view",
+        "//pkg/cmdutil",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

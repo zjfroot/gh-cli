@@ -1,0 +1,37 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "archive",
+    srcs = [
+        "archive.go",
+        "http.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/repo/archive",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/gh",
+        "//internal/ghrepo",
+        "//internal/prompter",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_shurcool_githubv4//:githubv4",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "archive_test",
+    srcs = ["archive_test.go"],
+    embed = [":archive"],
+    deps = [
+        "//internal/ghrepo",
+        "//internal/prompter",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

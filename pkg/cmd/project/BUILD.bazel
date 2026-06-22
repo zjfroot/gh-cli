@@ -1,0 +1,32 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "project",
+    srcs = ["project.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/project",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/project/close",
+        "//pkg/cmd/project/copy",
+        "//pkg/cmd/project/create",
+        "//pkg/cmd/project/delete",
+        "//pkg/cmd/project/edit",
+        "//pkg/cmd/project/field-create",
+        "//pkg/cmd/project/field-delete",
+        "//pkg/cmd/project/field-list",
+        "//pkg/cmd/project/item-add",
+        "//pkg/cmd/project/item-archive",
+        "//pkg/cmd/project/item-create",
+        "//pkg/cmd/project/item-delete",
+        "//pkg/cmd/project/item-edit",
+        "//pkg/cmd/project/item-list",
+        "//pkg/cmd/project/link",
+        "//pkg/cmd/project/list",
+        "//pkg/cmd/project/mark-template",
+        "//pkg/cmd/project/unlink",
+        "//pkg/cmd/project/view",
+        "//pkg/cmdutil",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

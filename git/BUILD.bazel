@@ -1,0 +1,33 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "git",
+    srcs = [
+        "client.go",
+        "command.go",
+        "errors.go",
+        "objects.go",
+        "url.go",
+    ],
+    importpath = "github.com/cli/cli/v2/git",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/ghinstance",
+        "//internal/run",
+        "@com_github_cli_safeexec//:safeexec",
+    ],
+)
+
+go_test(
+    name = "git_test",
+    srcs = [
+        "client_test.go",
+        "url_test.go",
+    ],
+    embed = [":git"],
+    deps = [
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+    data = glob(["fixtures/**"]),
+)

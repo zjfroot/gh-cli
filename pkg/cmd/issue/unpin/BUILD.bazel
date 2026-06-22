@@ -1,0 +1,35 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "unpin",
+    srcs = ["unpin.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/issue/unpin",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/gh",
+        "//internal/ghrepo",
+        "//pkg/cmd/issue/shared",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_shurcool_githubv4//:githubv4",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "unpin_test",
+    srcs = ["unpin_test.go"],
+    embed = [":unpin"],
+    deps = [
+        "//internal/config",
+        "//internal/gh",
+        "//internal/ghrepo",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

@@ -1,0 +1,28 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "context",
+    srcs = [
+        "context.go",
+        "remote.go",
+    ],
+    importpath = "github.com/cli/cli/v2/context",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//git",
+        "//internal/ghrepo",
+        "//pkg/iostreams",
+    ],
+)
+
+go_test(
+    name = "context_test",
+    srcs = ["remote_test.go"],
+    embed = [":context"],
+    deps = [
+        "//git",
+        "//internal/ghrepo",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

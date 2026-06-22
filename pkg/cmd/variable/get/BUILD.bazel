@@ -1,0 +1,36 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "get",
+    srcs = ["get.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/variable/get",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/gh",
+        "//internal/ghrepo",
+        "//pkg/cmd/variable/shared",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "get_test",
+    srcs = ["get_test.go"],
+    embed = [":get"],
+    deps = [
+        "//internal/config",
+        "//internal/gh",
+        "//internal/ghrepo",
+        "//pkg/cmd/variable/shared",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

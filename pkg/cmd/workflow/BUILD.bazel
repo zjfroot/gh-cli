@@ -1,0 +1,17 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "workflow",
+    srcs = ["workflow.go"],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/workflow",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/workflow/disable",
+        "//pkg/cmd/workflow/enable",
+        "//pkg/cmd/workflow/list",
+        "//pkg/cmd/workflow/run",
+        "//pkg/cmd/workflow/view",
+        "//pkg/cmdutil",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

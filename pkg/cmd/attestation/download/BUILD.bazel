@@ -1,0 +1,47 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "download",
+    srcs = [
+        "download.go",
+        "metadata.go",
+        "options.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/attestation/download",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/attestation/api",
+        "//pkg/cmd/attestation/artifact",
+        "//pkg/cmd/attestation/artifact/oci",
+        "//pkg/cmd/attestation/auth",
+        "//pkg/cmd/attestation/io",
+        "//pkg/cmd/attestation/verification",
+        "//pkg/cmdutil",
+        "@com_github_cli_go_gh_v2//pkg/auth",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_test(
+    name = "download_test",
+    srcs = [
+        "download_test.go",
+        "metadata_test.go",
+        "options_test.go",
+    ],
+    embed = [":download"],
+    deps = [
+        "//pkg/cmd/attestation/api",
+        "//pkg/cmd/attestation/artifact",
+        "//pkg/cmd/attestation/artifact/oci",
+        "//pkg/cmd/attestation/io",
+        "//pkg/cmd/attestation/test",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+    data = ["//pkg/cmd/attestation/test/data:sigstore-js-2.1.0.tgz"],
+)

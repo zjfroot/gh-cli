@@ -1,0 +1,32 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "artifact",
+    srcs = [
+        "artifact.go",
+        "file.go",
+        "image.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/attestation/artifact",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/cmd/attestation/artifact/digest",
+        "//pkg/cmd/attestation/artifact/oci",
+        "@com_github_distribution_reference//:reference",
+        "@com_github_google_go_containerregistry//pkg/name",
+    ],
+)
+
+go_test(
+    name = "artifact_test",
+    srcs = [
+        "artifact_posix_test.go",
+        "artifact_windows_test.go",
+        "image_test.go",
+    ],
+    embed = [":artifact"],
+    deps = [
+        "//pkg/cmd/attestation/artifact/oci",
+        "@com_github_stretchr_testify//require",
+    ],
+)

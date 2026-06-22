@@ -1,0 +1,19 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "prompter",
+    srcs = [
+        "prompter.go",
+        "prompter_mock.go",
+        "test.go",
+    ],
+    importpath = "github.com/cli/cli/v2/internal/prompter",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/ghinstance",
+        "//pkg/surveyext",
+        "@com_github_alecaivazis_survey_v2//:survey",
+        "@com_github_cli_go_gh_v2//pkg/prompter",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

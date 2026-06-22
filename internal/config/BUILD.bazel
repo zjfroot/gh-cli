@@ -1,0 +1,37 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "config",
+    srcs = [
+        "config.go",
+        "stub.go",
+    ],
+    importpath = "github.com/cli/cli/v2/internal/config",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/gh",
+        "//internal/gh/mock",
+        "//internal/keyring",
+        "//pkg/option",
+        "@com_github_cli_go_gh_v2//pkg/auth",
+        "@com_github_cli_go_gh_v2//pkg/config",
+    ],
+)
+
+go_test(
+    name = "config_test",
+    srcs = [
+        "auth_config_test.go",
+        "config_test.go",
+        "migrate_test.go",
+    ],
+    embed = [":config"],
+    deps = [
+        "//internal/config/migration",
+        "//internal/gh",
+        "//internal/gh/mock",
+        "//internal/keyring",
+        "@com_github_cli_go_gh_v2//pkg/config",
+        "@com_github_stretchr_testify//require",
+    ],
+)

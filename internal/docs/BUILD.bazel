@@ -1,0 +1,30 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "docs",
+    srcs = [
+        "man.go",
+        "markdown.go",
+    ],
+    importpath = "github.com/cli/cli/v2/internal/docs",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/text",
+        "//pkg/cmd/root",
+        "@com_github_cpuguy83_go_md2man_v2//md2man",
+        "@com_github_spf13_cobra//:cobra",
+        "@com_github_spf13_cobra//doc",
+        "@com_github_spf13_pflag//:pflag",
+    ],
+)
+
+go_test(
+    name = "docs_test",
+    srcs = [
+        "docs_test.go",
+        "man_test.go",
+        "markdown_test.go",
+    ],
+    embed = [":docs"],
+    deps = ["@com_github_spf13_cobra//:cobra"],
+)

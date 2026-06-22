@@ -31,3 +31,11 @@
 *~
 
 vendor/
+
+# Bazel
+/bazel-*
+/bazel-bin
+/bazel-out
+/bazel-testlogs
+/bazel-workspace
+MODULE.bazel.lock

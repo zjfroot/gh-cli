@@ -1,0 +1,17 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "safepaths",
+    srcs = ["absolute.go"],
+    importpath = "github.com/cli/cli/v2/internal/safepaths",
+    visibility = ["//:__subpackages__"],
+)
+
+go_test(
+    name = "safepaths_test",
+    srcs = ["absolute_test.go"],
+    deps = [
+        ":safepaths",
+        "@com_github_stretchr_testify//require",
+    ],
+)

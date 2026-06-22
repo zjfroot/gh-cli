@@ -1,0 +1,53 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "label",
+    srcs = [
+        "clone.go",
+        "create.go",
+        "delete.go",
+        "edit.go",
+        "http.go",
+        "label.go",
+        "list.go",
+        "shared.go",
+    ],
+    importpath = "github.com/cli/cli/v2/pkg/cmd/label",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//api",
+        "//internal/browser",
+        "//internal/ghrepo",
+        "//internal/tableprinter",
+        "//internal/text",
+        "//pkg/cmdutil",
+        "//pkg/iostreams",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_spf13_cobra//:cobra",
+        "@org_golang_x_sync//errgroup",
+    ],
+)
+
+go_test(
+    name = "label_test",
+    srcs = [
+        "clone_test.go",
+        "create_test.go",
+        "delete_test.go",
+        "edit_test.go",
+        "http_test.go",
+        "list_test.go",
+    ],
+    embed = [":label"],
+    deps = [
+        "//internal/browser",
+        "//internal/ghrepo",
+        "//internal/prompter",
+        "//pkg/cmdutil",
+        "//pkg/httpmock",
+        "//pkg/iostreams",
+        "@com_github_google_shlex//:shlex",
+        "@com_github_makenowjust_heredoc//:heredoc",
+        "@com_github_stretchr_testify//assert",
+    ],
+)
