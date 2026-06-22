@@ -107,6 +107,80 @@ When `bazel build` or `bazel test` fails with missing dependency errors for an e
 module, check the `go_deps.gazelle_override()` section in `MODULE.bazel`. The override may
 need additional directives or a different `build_file_generation` mode.
 
+## Troubleshooting
+
+### "missing strict dependencies" / "No dependencies were provided"
+
+A Go file imports a package that isn't declared in `deps` in the BUILD.bazel.
+
+**Fix:**
+1. Run `bazel run //:gazelle` to regenerate BUILD files
+2. If that doesn't help, check if the import path matches the `importpath` in the target's BUILD.bazel
+3. For proto packages, you may need a `gazelle_override` in `MODULE.bazel` (see "Gazelle overrides" above)
+
+### "flag provided but not defined"
+
+A Gazelle directive name is wrong in `MODULE.bazel`.
+
+**Fix:** Check the directive name against [Gazelle docs](https://github.com/bazelbuild/bazel-gazelle#directives). Common correct directives:
+- `gazelle:proto disable`
+- `gazelle:resolve go <importpath> <target>`
+- `gazelle:exclude <pattern>`
+
+### "no such package" / "repository could not be resolved"
+
+A dependency isn't declared in `use_repo()` in `MODULE.bazel`.
+
+**Fix:** Add the repo name to the `use_repo(go_deps, ...)` list. Repo names follow the pattern: `com_github_owner_repo` (underscores replace slashes/dots).
+
+### Test fails with "not a git repository" or file not found
+
+Bazel's sandbox isolates the test from the source tree. Relative paths like `./fixtures/simple.git` don't resolve.
+
+**Fix:** Copy test fixtures to `t.TempDir()` at runtime. See `git/client_test.go` for the `cpFixture()` helper.
+
+### Build is very slow on first run
+
+Protobuf toolchains and Go SDK download/compile on first build. Subsequent builds use the cache.
+
+**Fix:** Be patient. Use `--jobs=N` to limit parallelism if memory-constrained.
+
+### "ERROR: interrupted" / timeout
+
+Large builds may exceed default timeouts.
+
+**Fix:** Add `--timeout=3600` (seconds) to the command.
+
+### Debugging commands
+
+```sh
+bazel build //... --verbose_failures    # see failing commands
+bazel build //... --sandbox_debug       # debug sandbox issues
+bazel query 'deps(//cmd/gh)'           # check dependencies
+bazel query 'kind(".*_test", //...)'   # list all test targets
+```
+
+## Adding a new Go package
+
+1. Create your Go package normally
+2. Run `bazel run //:gazelle` — it auto-generates the BUILD.bazel
+3. Verify: `bazel build //your/package`
+
+## Adding a new external dependency
+
+1. `go get github.com/new/dep@version`
+2. `go mod tidy`
+3. `bazel run //:gazelle -- update-repos -from_file=go.mod`
+4. If the new dep needs special handling, add a `go_deps.gazelle_override()` in `MODULE.bazel`
+
+## Project-specific quirks
+
+1. **Go SDK 1.24.4** — pinned in `MODULE.bazel` via `go_sdk.download(version = "1.24.4")`
+2. **certificate-transparency-go** — needs `build_file_generation = "auto"` with `gazelle:proto disable` because its `configpb` package has pre-generated proto files
+3. **git tests** — use `cpFixture()` to copy `git/fixtures/simple.git` to a temp dir (sandbox blocks subprocess access to data files)
+4. **No cross-compilation yet** — Bazel config targets `k8-fastbuild` only
+5. **No install/release** — `make install` and `goreleaser` still use the Makefile workflow
+
 ## Comparison with Make
 
 | Task | Make | Bazel |
